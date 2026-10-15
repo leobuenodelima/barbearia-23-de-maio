@@ -53,7 +53,7 @@ Abra `seusite/admin`, faça login e use **Adicionar à tela inicial**. O painel 
 ### 6. Aviso no WhatsApp a cada agendamento (grátis)
 O banco manda uma mensagem para o WhatsApp do barbeiro a cada **novo agendamento** e a cada **cancelamento feito pelo cliente**, usando o serviço gratuito [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
 
-1. No celular do barbeiro, salve o contato **+34 644 43 38 04** (CallMeBot).
+1. No celular do barbeiro, salve o contato **+34 623 78 64 49** (CallMeBot).
 2. Mande para ele no WhatsApp: `I allow callmebot to send me messages`
 3. Ele responde com **"Your APIKEY is 123456"**. Guarde esse número.
 4. No Supabase → **SQL Editor**, cole e rode o arquivo [`supabase/notificacoes-whatsapp.sql`](supabase/notificacoes-whatsapp.sql).
