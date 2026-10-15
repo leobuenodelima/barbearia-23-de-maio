@@ -108,8 +108,16 @@ async function loadAdminData(){
       const t=p.table;
       if(t==="settings"){if(p.new&&p.new.data)S.settings=p.new.data}
       else if(S.data[t]){const c={...S.data[t]};if(p.eventType==="DELETE")delete c[p.old.id];else c[p.new.id]=p.new;S.data[t]=c}
+      if(t==="appointments"&&p.eventType==="INSERT"&&p.new.origem==="site")alertNew(p.new);
       render();
     }).subscribe();
+}
+function alertNew(a){
+  toast(`Novo agendamento: ${a.name.split(" ")[0]} · ${dShort(a.date).slice(0,5)} às ${a.time}`);
+  try{const ctx=new (window.AudioContext||window.webkitAudioContext)();[880,1175].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();
+    o.frequency.value=f;o.connect(g);g.connect(ctx.destination);const t0=ctx.currentTime+i*.18;g.gain.setValueAtTime(.0001,t0);g.gain.exponentialRampToValueAtTime(.25,t0+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+.16);o.start(t0);o.stop(t0+.17)})}catch(_){}
+  const base=document.title.replace(/^\(\d+\) /,"");let n=Number((document.title.match(/^\((\d+)\)/)||[])[1]||0)+1;
+  if(document.hidden){document.title=`(${n}) ${base}`;document.addEventListener("visibilitychange",function f(){if(!document.hidden){document.title=base;document.removeEventListener("visibilitychange",f)}})}
 }
 async function checkSession(){
   if(!sb)return false;

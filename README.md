@@ -50,6 +50,24 @@ Salve e faça commit no GitHub (dá para editar direto pelo site do GitHub, no l
 ### 5. No celular do barbeiro
 Abra `seusite/admin`, faça login e use **Adicionar à tela inicial**. O painel abre como app.
 
+### 6. Aviso no WhatsApp a cada agendamento (grátis)
+O banco manda uma mensagem para o WhatsApp do barbeiro a cada **novo agendamento** e a cada **cancelamento feito pelo cliente**, usando o serviço gratuito [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
+
+1. No celular do barbeiro, salve o contato **+34 644 43 38 04** (CallMeBot).
+2. Mande para ele no WhatsApp: `I allow callmebot to send me messages`
+3. Ele responde com **"Your APIKEY is 123456"**. Guarde esse número.
+4. No Supabase → **SQL Editor**, cole e rode o arquivo [`supabase/notificacoes-whatsapp.sql`](supabase/notificacoes-whatsapp.sql).
+5. Rode também (trocando `SUA_CHAVE`):
+   ```sql
+   insert into public.private_config (key, value) values
+     ('callmebot_phone',  '+5541987402139'),
+     ('callmebot_apikey', 'SUA_CHAVE')
+   on conflict (key) do update set value = excluded.value;
+   ```
+6. Teste: `select public.notify_whatsapp('Teste do site ✅');`
+
+A chave fica numa tabela que o site não consegue ler. Se o CallMeBot cair, o agendamento continua funcionando normalmente; só o aviso não chega. Com o painel aberto, ele também toca um som e mostra o aviso na tela.
+
 ---
 
 ## Estrutura
