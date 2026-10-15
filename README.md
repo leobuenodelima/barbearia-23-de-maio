@@ -26,7 +26,7 @@ Site de agendamento + painel do barbeiro (agenda, clientes, assinantes e finance
    select id from auth.users where email = 'SEU-EMAIL@gmail.com';
    ```
 5. Menu **Authentication → Sign In / Providers** → desligue **Allow new users to sign up** (ninguém mais cria conta).
-6. Menu **Project Settings → API**: copie **Project URL** e a chave **anon public**.
+6. Menu **Project Settings → API**: copie a **Project URL** e a chave **publishable** (`sb_publishable_...`). Nunca use a chave **secret** (`sb_secret_...`).
 
 ### 2. Configurar o site
 Abra o arquivo `config.js` e cole os dois valores:

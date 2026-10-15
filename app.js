@@ -51,7 +51,9 @@ const errMsg=e=>{const m=(e&&(e.message||e.details))||"";const k=Object.keys(ERR
 
 /* ============ dados ============ */
 const CFG=window.APP_CONFIG||{};
-const configured=/^https:\/\//.test(CFG.SUPABASE_URL||"")&&!!CFG.SUPABASE_ANON_KEY&&!/COLE_AQUI/.test(CFG.SUPABASE_ANON_KEY);
+const secretKey=/^sb_secret_|service_role/.test(CFG.SUPABASE_ANON_KEY||"");
+if(secretKey)console.error("config.js contém a chave SECRETA do Supabase. Use a chave publishable/anon e troque (rotate) a secreta.");
+const configured=!secretKey&&/^https:\/\//.test(CFG.SUPABASE_URL||"")&&!!CFG.SUPABASE_ANON_KEY&&!/COLE_AQUI/.test(CFG.SUPABASE_ANON_KEY);
 const sb=configured&&window.supabase?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
 if(!sb)$("#cfgBar").hidden=false;
 
