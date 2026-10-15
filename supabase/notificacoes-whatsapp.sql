@@ -85,7 +85,7 @@ create trigger appointments_notify
 --  (troque SUA_CHAVE pela chave recebida):
 --
 --  insert into public.private_config (key, value) values
---    ('callmebot_phone',  '+5541987402139'),
+--    ('callmebot_phone',  '+554198142660'),  -- número igual ao do link de teste do CallMeBot (geralmente sem o 9º dígito)
 --    ('callmebot_apikey', 'SUA_CHAVE')
 --  on conflict (key) do update set value = excluded.value;
 --

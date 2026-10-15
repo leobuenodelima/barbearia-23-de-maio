@@ -53,18 +53,20 @@ Abra `seusite/admin`, faça login e use **Adicionar à tela inicial**. O painel 
 ### 6. Aviso no WhatsApp a cada agendamento (grátis)
 O banco manda uma mensagem para o WhatsApp do barbeiro a cada **novo agendamento** e a cada **cancelamento feito pelo cliente**, usando o serviço gratuito [CallMeBot](https://www.callmebot.com/blog/free-api-whatsapp-messages/).
 
-1. No celular do barbeiro, salve o contato **+34 623 78 64 49** (CallMeBot).
+1. No celular do barbeiro, salve o contato do CallMeBot. O número do bot já mudou algumas vezes; confira o atual em <https://www.callmebot.com/blog/free-api-whatsapp-messages/> (em out/2026 funcionou o **+34 644 21 78 06**).
 2. Mande para ele no WhatsApp: `I allow callmebot to send me messages`
 3. Ele responde com **"Your APIKEY is 123456"**. Guarde esse número.
 4. No Supabase → **SQL Editor**, cole e rode o arquivo [`supabase/notificacoes-whatsapp.sql`](supabase/notificacoes-whatsapp.sql).
 5. Rode também (trocando `SUA_CHAVE`):
    ```sql
    insert into public.private_config (key, value) values
-     ('callmebot_phone',  '+5541987402139'),
+     ('callmebot_phone',  '+554198142660'),  -- use o número que aparece no link de teste do CallMeBot
      ('callmebot_apikey', 'SUA_CHAVE')
    on conflict (key) do update set value = excluded.value;
    ```
 6. Teste: `select public.notify_whatsapp('Teste do site ✅');`
+
+> **Atenção ao 9º dígito:** em muitos celulares brasileiros o WhatsApp registra o número **sem o 9 extra** (ex.: `+554198142660`). Use exatamente o número que aparece no link de teste que o CallMeBot manda junto com a chave.
 
 A chave fica numa tabela que o site não consegue ler. Se o CallMeBot cair, o agendamento continua funcionando normalmente; só o aviso não chega. Com o painel aberto, ele também toca um som e mostra o aviso na tela.
 
