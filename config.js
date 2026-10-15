@@ -6,6 +6,6 @@
 // NUNCA cole aqui a chave "secret" (sb_secret_...) nem a "service_role".
 // Elas dão acesso total ao banco e não podem ficar no site.
 window.APP_CONFIG = {
-  SUPABASE_URL: "https://tslpfmqyohclxreypsnh.supabase.co/rest/v1/",
+  SUPABASE_URL: "https://tslpfmqyohclxreypsnh.supabase.co",
   SUPABASE_ANON_KEY: "sb_publishable_USzCKPjHvUG4358-LuTZmg_5Gl_R-TZ"
 };

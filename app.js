@@ -50,7 +50,8 @@ const ERRS={NOME_INVALIDO:"Digite nome e sobrenome.",CELULAR_INVALIDO:"Digite o 
 const errMsg=e=>{const m=(e&&(e.message||e.details))||"";const k=Object.keys(ERRS).find(k=>m.includes(k));return k?ERRS[k]:"Não foi possível concluir. Verifique a internet e tente de novo."};
 
 /* ============ dados ============ */
-const CFG=window.APP_CONFIG||{};
+const CFG={...(window.APP_CONFIG||{})};
+CFG.SUPABASE_URL=String(CFG.SUPABASE_URL||"").trim().replace(/\/(rest|auth)\/v1\/?.*$/,"").replace(/\/+$/,"");
 const secretKey=/^sb_secret_|service_role/.test(CFG.SUPABASE_ANON_KEY||"");
 if(secretKey)console.error("config.js contém a chave SECRETA do Supabase. Use a chave publishable/anon e troque (rotate) a secreta.");
 const configured=!secretKey&&/^https:\/\//.test(CFG.SUPABASE_URL||"")&&!!CFG.SUPABASE_ANON_KEY&&!/COLE_AQUI/.test(CFG.SUPABASE_ANON_KEY);
