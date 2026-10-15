@@ -3,7 +3,7 @@
 Site de agendamento + painel do barbeiro (agenda, clientes, assinantes e financeiro).
 
 - **Site do cliente:** escolhe serviços, dia e horário, informa nome completo e celular, e pode cancelar em "Meus horários".
-- **Painel** (`/#barbeiro` ou link "Área do barbeiro" no rodapé): login com e-mail e senha.
+- **Painel do dono:** tela separada em `seusite/admin`: login com e-mail e senha.
 - Tecnologia: HTML + JavaScript puro, banco **Supabase** (grátis), hospedagem **Vercel** (grátis). Não tem etapa de build.
 
 ## Segurança
@@ -48,7 +48,7 @@ Salve e faça commit no GitHub (dá para editar direto pelo site do GitHub, no l
 2. Na Vercel: **Project → Settings → Domains → Add** e siga as instruções de DNS.
 
 ### 5. No celular do barbeiro
-Abra `seusite/#barbeiro`, faça login e use **Adicionar à tela inicial**. O painel abre como app.
+Abra `seusite/admin`, faça login e use **Adicionar à tela inicial**. O painel abre como app.
 
 ---
 

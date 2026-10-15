@@ -27,6 +27,9 @@ const durTxt=m=>m>=60?`${Math.floor(m/60)}h${m%60?pad(m%60):""}`:`${m} min`;
 const money=v=>Number(String(v).replace(/\./g,"").replace(",","."))||0;
 let toastT;function toast(msg){const t=$("#toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2800)}
 
+if(location.hash==="#barbeiro"){location.replace("/admin");return}
+const ADMIN_PAGE=/^\/admin(\.html)?\/?$/.test(location.pathname);
+
 /* ============ defaults (usados até o banco responder) ============ */
 const DEF={
   services:[
@@ -253,13 +256,12 @@ document.addEventListener("click",async e=>{
 });
 
 /* ============ PAINEL ============ */
-let view="public",tab="agenda";
+let view=ADMIN_PAGE?"login":"public",tab="agenda";
 const A={date:today(),month:today().slice(0,7),q:"",subQ:""};
 function go(v){
+  if(v==="public"&&ADMIN_PAGE){location.href="/";return}
   view=v;$("#publicView").hidden=v!=="public";$("#adminView").hidden=v!=="admin";$("#loginView").hidden=v!=="login";
   $("#waFab").hidden=v!=="public";window.scrollTo(0,0);
-  if(v==="admin"&&location.hash!=="#barbeiro")history.replaceState(null,"","#barbeiro");
-  if(v==="public"&&location.hash==="#barbeiro")history.replaceState(null,"",location.pathname);
   render();
 }
 async function tryAdmin(){
@@ -267,7 +269,7 @@ async function tryAdmin(){
   if(await checkSession()){go("admin");return}
   go("login");setTimeout(()=>$("#email").focus(),50);
 }
-$("#goAdmin").onclick=tryAdmin;
+$("#goAdmin").onclick=()=>{location.href="/admin"};
 $("#loginBack").onclick=()=>go("public");
 $("#loginForm").addEventListener("submit",async e=>{
   e.preventDefault();const err=$("#pinErr");err.hidden=true;
@@ -280,7 +282,7 @@ $("#loginForm").addEventListener("submit",async e=>{
   $("#pass").value="";go("admin");
 });
 $("#admSite").onclick=()=>go("public");$("#admBrand").onclick=()=>{tab="agenda";render()};
-$("#admOut").onclick=async()=>{await sb.auth.signOut();S.admin=false;S.data={appointments:{},expenses:{},subscribers:{}};if(S.channel){sb.removeChannel(S.channel);S.channel=null}go("public");loadBusy()};
+$("#admOut").onclick=async()=>{await sb.auth.signOut();S.admin=false;S.data={appointments:{},expenses:{},subscribers:{}};if(S.channel){sb.removeChannel(S.channel);S.channel=null}go(ADMIN_PAGE?"login":"public");if(!ADMIN_PAGE)loadBusy()};
 $("#tabBar").addEventListener("click",e=>{const b=e.target.closest("[data-tab]");if(b){tab=b.dataset.tab;draft=null;render()}});
 
 function render(){
@@ -696,10 +698,15 @@ document.addEventListener("click",async e=>{
 });
 
 /* ============ início ============ */
-renderPublic();
+if(ADMIN_PAGE){
+  $("#publicView").hidden=true;$("#waFab").hidden=true;
+  document.title="Painel · 23 de Maio Barbearia";
+  const m=document.createElement("meta");m.name="robots";m.content="noindex,nofollow";document.head.appendChild(m);
+  const mf=document.querySelector('link[rel="manifest"]');if(mf)mf.href="/admin.webmanifest";
+}else renderPublic();
 (async()=>{
   await loadSettings();
-  if(location.hash==="#barbeiro")await tryAdmin();
+  if(ADMIN_PAGE)await tryAdmin();
   else{await checkSession();loadBusy()}
   if(sb)sb.channel("public-settings").on("postgres_changes",{event:"*",schema:"public",table:"settings"},p=>{if(p.new&&p.new.data){S.settings=p.new.data;render()}}).subscribe();
 })();
