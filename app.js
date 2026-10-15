@@ -40,7 +40,7 @@ const DEF={
     {id:"depilacao",name:"Depilação nariz e orelha",price:15,dur:15}
   ],
   hours:{wk:["09:30","19:00"],sat:["09:30","17:00"]},
-  step:30,chairs:1,whatsapp:"41987402139",address:"",plans:[],blocked:[]
+  step:30,chairs:1,whatsapp:"41987402139",address:"Rua Padre Gaston, 571",plans:[],blocked:[]
 };
 const EXP_CATS=["Aluguel","Produtos","Energia","Água","Internet","Comissão / salários","Manutenção","Impostos","Marketing","Outros"];
 const ERRS={NOME_INVALIDO:"Digite nome e sobrenome.",CELULAR_INVALIDO:"Digite o celular com DDD.",SERVICO_INVALIDO:"Escolha pelo menos um serviço.",

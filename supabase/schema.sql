@@ -267,7 +267,7 @@ insert into public.settings (id, data) values (1, '{
   "step": 30,
   "chairs": 1,
   "whatsapp": "41987402139",
-  "address": "",
+  "address": "Rua Padre Gaston, 571",
   "blocked": [],
   "plans": [
     {"name":"Plano Cabelo","price":129.9},
